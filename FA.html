@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for faith only!! 💖</title>
+    <style>
+        /* Background image */
+        body {
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            background-image: url('b.jpg'); /* Change to your image */
+            background-size: cover;
+            background-position: center;
+            color: #d63384;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Floating hearts animation */
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff4081;
+            font-size: 24px;
+            animation: float 5s linear infinite;
+        }
+
+        /* Container */
+        .container {
+            background-color: rgba(255, 179, 217, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 50px;
+        }
+
+        /* Buttons */
+        button {
+            background-color: #bdcbf8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff6382;
+            transform: scale(1.1);
+        }
+
+        /* Moving "No" button */
+        #noButton {
+            position: relative;
+        }
+
+        /* Response message */
+        #response {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #ff4081;
+        }
+
+        /* Confetti canvas */
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>hi faithhh! 💕</h1>
+        <p>Will you be my Valentine? 🥺💖</p>
+        
+        <div class="buttons">
+            <button id="yesButton">Yes! 💘</button>
+            <button id="noButton">No... 😢</button>
+        </div>
+
+        <p id="response"></p>
+    </div>
+
+    <canvas id="confettiCanvas"></canvas>
+
+    <script>
+        // Heart animation
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.innerHTML = "💖";
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 500);
+
+        // Confetti animation
+        const canvas = document.getElementById("confettiCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let confetti = [];
+
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                confetti.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 6 + 2,
+                    speedY: Math.random() * 3 + 1,
+                    color: `hsl(${Math.random() * 360}, 100%, 75%)`
+                });
+            }
+        }
+
+        function drawConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confetti.forEach((c) => {
+                ctx.fillStyle = c.color;
+                ctx.beginPath();
+                ctx.arc(c.x, c.y, c.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        function updateConfetti() {
+            confetti.forEach((c, i) => {
+                c.y += c.speedY;
+                if (c.y > canvas.height) {
+                    confetti.splice(i, 1);
+                }
+            });
+        }
+
+        function animateConfetti() {
+            drawConfetti();
+            updateConfetti();
+            requestAnimationFrame(animateConfetti);
+        }
+
+        // Show confetti when clicking "Yes"
+        document.getElementById("yesButton").addEventListener("click", function() {
+            document.getElementById("response").innerText = "WOWWWWWWWW! love you baby 🤍🤍🤍";
+            confetti = [];
+            createConfetti();
+            animateConfetti();
+        });
+
+        // Playful "No" button movement
+        document.getElementById("noButton").addEventListener("click", function() {
+            this.style.top = Math.random() * window.innerHeight + "px";
+            this.style.left = Math.random() * window.innerWidth + "px";
+        });
+
+        document.getElementById("noButton").addEventListener("click", function() {
+            document.getElementById("response").innerText = "aguyyyy.... oks lang tol 🙃🙃🙃";
+        });
+    </script>
+
+</body>
+</html>
